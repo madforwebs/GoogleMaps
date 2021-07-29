@@ -19,6 +19,8 @@ class Map
     {
         $this->em = $em;
         $this->container = $container;
+        $this->apiGoogleMaps = $apiGoogleMaps;
+        $this->positionEntity = $positionEntity;
     }
 
     public function circle_distance($lat1, $lon1, $lat2, $lon2)
@@ -126,7 +128,7 @@ class Map
             }
         }
 
-        $positionCP = new PositionCP();
+        $positionCP = new $this->positionEntity();
         $positionCP->setCp($cp);
         $positionCP->setLat($lat);
         $positionCP->setLng($lng);
