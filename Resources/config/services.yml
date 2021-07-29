@@ -1,6 +1,4 @@
 parameters:
-    key_googlemaps: XXXXXXXXXXX
-    position_entity: XXXXXXXXXX
     core.map.class:  MadForWebs\GoogleMapsBundle\Service\Map
 
 services:
