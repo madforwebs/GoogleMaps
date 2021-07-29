@@ -1,6 +1,6 @@
 <?php
 
-namespace MadForWebs\GoogleMapsBundle\\Service;
+namespace MadForWebs\GoogleMapsBundle\Service;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\DependencyInjection\Container;
