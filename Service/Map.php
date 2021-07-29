@@ -7,6 +7,10 @@ use Symfony\Component\DependencyInjection\Container;
 
 class Map
 {
+    protected $apiGoogleMaps;
+
+    protected $positionEntity;
+
     protected $em;
 
     protected $container;
@@ -46,7 +50,7 @@ class Map
         $country = $storage->getCountry();
         $address = $storage->getAddress();
 
-        $positionCP = $this->em->getRepository($positionEntity)->findOneBy(array('cp' => $cp));
+        $positionCP = $this->em->getRepository($this->positionEntity)->findOneBy(array('cp' => $cp));
 
         if (!$positionCP) {
             $positionCP = $this->getPosition($address.','.$cp.','.$country);
@@ -83,7 +87,7 @@ class Map
 
     public function getPositionFromAddress($address)
     {
-        $positionCP = $this->em->getRepository($positionEntity)->findOneBy(array('address' => $address));
+        $positionCP = $this->em->getRepository($this->positionEntity)->findOneBy(array('address' => $address));
         if (!$positionCP) {
             $positionCP = $this->getPosition($address);
             $this->em->persist($positionCP);
@@ -95,7 +99,7 @@ class Map
 
     public function getPosition($address)
     {
-        $requestPosition = 'https://maps.googleapis.com/maps/api/geocode/json?address='.urlencode($address.',spain').'&sensor=false&key='.$apiGoogleMaps;
+        $requestPosition = 'https://maps.googleapis.com/maps/api/geocode/json?address='.urlencode($address.',spain').'&sensor=false&key='.$this->apiGoogleMaps;
         $coords = json_decode(file_get_contents($requestPosition));
 
         if ($coords->status == 'ZERO_RESULTS') {
@@ -107,14 +111,14 @@ class Map
                     break;
                 }
             }
-            $requestPosition = 'https://maps.googleapis.com/maps/api/geocode/json?address='.urlencode($address.',spain').'&sensor=false&key='.$apiGoogleMaps;
+            $requestPosition = 'https://maps.googleapis.com/maps/api/geocode/json?address='.urlencode($address.',spain').'&sensor=false&key='.$this->apiGoogleMaps;
             $coords = json_decode(file_get_contents($requestPosition));
         }
 
         $lng = $coords->results[0]->geometry->location->lng;
         $lat = $coords->results[0]->geometry->location->lat;
 
-        $requestCoords = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='.$lat.','.$lng.'&sensor=true_or_false&key='.$apiGoogleMaps;
+        $requestCoords = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='.$lat.','.$lng.'&sensor=true_or_false&key='.$this->apiGoogleMaps;
         $coords = json_decode(file_get_contents($requestCoords));
         foreach ($coords->results[0]->address_components as $address_component) {
             if ($address_component->types[0] == 'postal_code') {
