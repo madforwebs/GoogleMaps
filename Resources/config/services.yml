@@ -1,0 +1,13 @@
+parameters:
+    key_googlemaps: XXXXXXXXXXX
+    position_entity: XXXXXXXXXX
+    core.map.class:  CoreBundle\Service\Map
+
+services:
+    core.map:
+        class: "%core.map.class%"
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@service_container'
+            - '%key_googlemaps%'
+            - '%position_entity%'
