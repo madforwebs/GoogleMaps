@@ -1,6 +1,7 @@
 parameters:
     key_googlemaps: XXXXXXXXXXX
     position_entity: XXXXXXXXXX
+    position_repository: XXXXXXXXXX
     core.map.class:  MadForWebs\GoogleMapsBundle\Service\Map
 
 services:
@@ -11,3 +12,4 @@ services:
             - '@service_container'
             - '%key_googlemaps%'
             - '%position_entity%'
+            - '%position_repository%'

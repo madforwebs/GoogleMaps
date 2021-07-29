@@ -11,16 +11,19 @@ class Map
 
     protected $positionEntity;
 
+    protected $positionRepository;
+
     protected $em;
 
     protected $container;
 
-    public function __construct(EntityManager $em, Container $container, $apiGoogleMaps, $positionEntity)
+    public function __construct(EntityManager $em, Container $container, $apiGoogleMaps, $positionEntity, $positionRepository)
     {
         $this->em = $em;
         $this->container = $container;
         $this->apiGoogleMaps = $apiGoogleMaps;
         $this->positionEntity = $positionEntity;
+        $this->positionRepository = $positionRepository;
     }
 
     public function circle_distance($lat1, $lon1, $lat2, $lon2)
@@ -52,7 +55,7 @@ class Map
         $country = $storage->getCountry();
         $address = $storage->getAddress();
 
-        $positionCP = $this->em->getRepository($this->positionEntity)->findOneBy(array('cp' => $cp));
+        $positionCP = $this->em->getRepository($this->positionRepository)->findOneBy(array('cp' => $cp));
 
         if (!$positionCP) {
             $positionCP = $this->getPosition($address.','.$cp.','.$country);
@@ -89,7 +92,7 @@ class Map
 
     public function getPositionFromAddress($address)
     {
-        $positionCP = $this->em->getRepository($this->positionEntity)->findOneBy(array('address' => $address));
+        $positionCP = $this->em->getRepository($this->positionRepository)->findOneBy(array('address' => $address));
         if (!$positionCP) {
             $positionCP = $this->getPosition($address);
             $this->em->persist($positionCP);
