@@ -1,10 +1,7 @@
 <?php
 
-namespace CoreBundle\Service;
+namespace MadForWebs\GoogleMapsBundle\\Service;
 
-use CoreBundle\Entity\PositionCP;
-use CoreBundle\Entity\Storage;
-use CoreBundle\Entity\User;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\DependencyInjection\Container;
 
