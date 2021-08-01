@@ -49,11 +49,11 @@ class Map
         return $distance;
     }
 
-    public function getPositionFromStorage(Storage $storage)
+    public function getPositionFromPosition(Position $position)
     {
-        $cp = $storage->getZipCode();
-        $country = $storage->getCountry();
-        $address = $storage->getAddress();
+        $cp = $position->getZipCode();
+        $country = $position->getCountry();
+        $address = $position->getAddress();
 
         $positionCP = $this->em->getRepository($this->positionRepository)->findOneBy(array('cp' => $cp));
 
