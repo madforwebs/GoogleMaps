@@ -49,7 +49,7 @@ class Map
         return $distance;
     }
 
-    public function getPositionFromPosition(Position $position)
+    public function getPositionFromPosition( $position)
     {
         $cp = $position->getZipCode();
         $country = $position->getCountry();
@@ -72,7 +72,7 @@ class Map
      *
      * @return float
      */
-    public function getDistanceBetween(PositionCP $positionA, PositionCP $positionB)
+    public function getDistanceBetween( $positionA,  $positionB)
     {
         $earthRadius = 6371000;
         $latFrom = deg2rad($positionA->getLat());
