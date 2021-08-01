@@ -107,6 +107,8 @@ class Map
         $requestPosition = 'https://maps.googleapis.com/maps/api/geocode/json?address='.urlencode($address.',spain').'&sensor=false&key='.$this->apiGoogleMaps;
         $coords = json_decode(file_get_contents($requestPosition));
 
+
+
         if ($coords->status == 'ZERO_RESULTS') {
             $addressArray = explode(',', trim($address));
             $address = $addressArray[0].',';
@@ -123,8 +125,8 @@ class Map
         $lng = $coords->results[0]->geometry->location->lng;
         $lat = $coords->results[0]->geometry->location->lat;
 
-        $requestCoords = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='.$lat.','.$lng.'&sensor=true_or_false&key='.$this->apiGoogleMaps;
-        $coords = json_decode(file_get_contents($requestCoords));
+        //$requestCoords = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='.$lat.','.$lng.'&sensor=true_or_false&key='.$this->apiGoogleMaps;
+       // $coords = json_decode(file_get_contents($requestCoords));
         foreach ($coords->results[0]->address_components as $address_component) {
             if ($address_component->types[0] == 'postal_code') {
                 $cp = $address_component->long_name;
@@ -148,10 +150,12 @@ class Map
             $address = $coords->results[0]->formatted_address;
         }
 
+
+
         $positionCP = new $this->positionEntity();
         $positionCP->setCity($city);
         $positionCP->setProvince($localidad);
-        $positionCP->setCountry($country);
+        //$positionCP->setCountry($country);
         $positionCP->setCp($cp);
         $positionCP->setZipCode($cp);
         $positionCP->setLat($lat);
