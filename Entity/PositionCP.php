@@ -11,30 +11,51 @@ use Gedmo\Mapping\Annotation as Gedmo;
 class PositionCP
 {
     /**
+     * @ORM\ManyToOne(targetEntity="Country")
+     */
+    protected $country;
+
+    /**
      * @var int
      *
      * @ORM\Column(name="cp", type="integer")
      */
-    private $cp;
+    protected $cp;
 
     /**
      * @var float
      *
      * @ORM\Column(name="lng", type="float")
      */
-    private $lng;
+    protected $lng;
 
     /**
      * @var float
      *
      * @ORM\Column(name="lat", type="float")
      */
-    private $lat;
+    protected $lat;
 
     /**
      * @ORM\Column(name="address", type="string")
      */
-    private $address = '';
+    protected $address = '';
+
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $province = '';
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $city = '';
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $zipCode = '';
 
     public function __toString()
     {
@@ -112,4 +133,69 @@ class PositionCP
     {
         $this->address = $address;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getCountry()
+    {
+        return $this->country;
+    }
+
+    /**
+     * @param mixed $country
+     */
+    public function setCountry($country)
+    {
+        $this->country = $country;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProvince()
+    {
+        return $this->province;
+    }
+
+    /**
+     * @param mixed $province
+     */
+    public function setProvince($province)
+    {
+        $this->province = $province;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * @param mixed $city
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getZipCode()
+    {
+        return $this->zipCode;
+    }
+
+    /**
+     * @param mixed $zipCode
+     */
+    public function setZipCode($zipCode)
+    {
+        $this->zipCode = $zipCode;
+    }
+
 }
