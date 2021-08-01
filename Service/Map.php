@@ -128,11 +128,32 @@ class Map
         foreach ($coords->results[0]->address_components as $address_component) {
             if ($address_component->types[0] == 'postal_code') {
                 $cp = $address_component->long_name;
+            }elseif ($address_component->types[0] == 'country') {
+                $country = $address_component->long_name;
+            /*
+            }elseif ($address_component->types[0] == 'administrative_area_level_1') {
+                $area = $address_component->long_name;
+            */
+            }elseif ($address_component->types[0] == 'administrative_area_level_2') {
+                $city = $address_component->long_name;
+
+            }elseif ($address_component->types[0] == 'locality') {
+                $localidad = $address_component->long_name;
+            }elseif ($address_component->types[0] == 'route') {
+                $localidad = $address_component->long_name;
             }
         }
 
+        if(isset($coords->results[0]) && $coords->results[0]->formatted_address != null){
+            $address = $coords->results[0]->formatted_address;
+        }
+
         $positionCP = new $this->positionEntity();
+        $positionCP->setCity($city);
+        $positionCP->setProvince($localidad);
+        $positionCP->setCountry($country);
         $positionCP->setCp($cp);
+        $positionCP->setZipCode($cp);
         $positionCP->setLat($lat);
         $positionCP->setLng($lng);
         $positionCP->setAddress($address);
